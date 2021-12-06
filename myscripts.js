@@ -42,29 +42,78 @@ function playRound(playerSelection, computerSelection) {
     // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
     playerSelection = playerSelection.toLowerCase();
 
+    // create a variable to see whether the player gains, loses, or ties in points
+    let point = 0;
+
     // if...else statements to compare the player choice against the computer choice
     if (playerSelection === 'rock' && computerSelection === 'rock') {
-        return "You both chose rock! That's a tie round!";
+        console.log("You both chose rock! That's a tie round!")
+        return point;
     } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return "You lose! Paper beats rock!";
+        console.log("You lose! Paper beats rock!");
+        return point -= 1;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        return "You win! Rock beats scissors!";
+        console.log("You win! Rock beats scissors!")
+        return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return "You win! Paper beats rock!";
+        console.log("You win! Paper beats rock!");
+        return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'paper') {
-        return "You both chose rock! That's a tie round!";
+        console.log("You both chose rock! That's a tie round!");
+        return point;
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return "You lose! Scissors beats rock!";
+        console.log("You lose! Scissors beats rock!");
+        return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return "You lose! Rock beats scissors!";
+        console.log("You lose! Rock beats scissors!");
+        return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return "You win! Scissors beats paper!";
+        console.log("You win! Scissors beats paper!");
+        return point += 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-        return "You both chose scissors! It's a tie round!";
+        console.log("You both chose scissors! It's a tie round!");
+        return point;
     }
 }
 
-// testing
-const playerSelection = 'SCISSORS';
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+
+// this function will play a 5 round game that will keep score and report a winner or lose by the end
+function game() {
+
+    // save the computer's choice as a constant
+    const computerSelection = computerPlay();
+
+    // create a string for the player's choice. leave it empty for now.
+    let playerSelection = '';
+
+    // create an int to keep score for the player. init at 0;
+    let playerScore = 0;
+
+    // create an int to keep score for the computer. init at 0;
+    let computerScore = 0;
+
+    // we're going to play five times, so let's make a for loop that loops 5 times
+    for (let i = 0; i < 5; i++) {
+        // prompt the user to input their choice and save it to the variable we just declared
+        playerSelection = prompt("Rock, paper, or scissors?");
+
+        // if statement to see what the playRound function returns and to distribute points depending on what it returns
+        switch(playRound(playerSelection, computerSelection)) {
+            case -1:
+                // in this case, the player lost and the computer won, so distribute points according to that.
+                computerScore += 1;
+                break;
+            case 0:
+                // in this case, the player and the computer tied so no points are distributed
+                break;
+            case 1:
+                // in this case the player won. distribute points accordingly
+                playerScore += 1;
+                break;
+        }
+    }
+
+    
+}
+
+console.log(game());
