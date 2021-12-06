@@ -73,6 +73,9 @@ function playRound(playerSelection, computerSelection) {
     } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
         console.log("You both chose scissors! It's a tie round!");
         return point;
+    } else {
+        // the player didn't input rock, paper, or scissors, so let's let him know
+        console.log("You didn't input rock, paper, or scissors. Please input one of those!");
     }
 }
 
@@ -113,6 +116,14 @@ function game() {
         }
     }
 
+    // find out who won and print an appropriate message
+    if (playerScore > computerScore) {
+        console.log("Hip, hip, hurray! You won!");
+    } else if (playerScore < computerScore) {
+        console.log("Oof! You lost! Try again next time!");
+    } else if (playerScore === computerScore) {
+        console.log("It's a tie game! What are the odds!");
+    }
     
 }
 
