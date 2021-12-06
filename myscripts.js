@@ -36,3 +36,35 @@ function computerPlay() {
     return finalChoice;
 }
 
+// making a function where the user can play a round against the computer
+// two parameters are taken, the computer's choice of what to do and the player's choice of what to do.
+function playRound(playerSelection, computerSelection) {
+    // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
+    playerSelection = playerSelection.toLowerCase();
+
+    // if...else statements to compare the player choice against the computer choice
+    if (playerSelection === 'rock' && computerSelection === 'rock') {
+        return "You both chose rock! That's a tie round!";
+    } else if (playerSelection === 'rock' && computerSelection === 'paper') {
+        return "You lose! Paper beats rock!";
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+        return "You win! Rock beats scissors!";
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        return "You win! Paper beats rock!";
+    } else if (playerSelection === 'paper' && computerSelection === 'paper') {
+        return "You both chose rock! That's a tie round!";
+    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
+        return "You lose! Scissors beats rock!";
+    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+        return "You lose! Rock beats scissors!";
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+        return "You win! Scissors beats paper!";
+    } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
+        return "You both chose scissors! It's a tie round!";
+    }
+}
+
+// testing
+const playerSelection = 'SCISSORS';
+const computerSelection = computerPlay();
+console.log(playRound(playerSelection, computerSelection));
