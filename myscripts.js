@@ -62,7 +62,7 @@ function playRound(playerSelection, computerSelection) {
         console.log("You both chose rock! That's a tie round!");
         return point;
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        console.log("You lose! Scissors beats rock!");
+        console.log("You lose! Scissors beats paper!");
         return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
         console.log("You lose! Rock beats scissors!");
