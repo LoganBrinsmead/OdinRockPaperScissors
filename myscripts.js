@@ -36,6 +36,7 @@ function computerPlay() {
     return finalChoice;
 }
 
+/*
 // making a function where the user can play a round against the computer
 // two parameters are taken, the computer's choice of what to do and the player's choice of what to do.
 function playRound(playerSelection, computerSelection) {
@@ -78,8 +79,9 @@ function playRound(playerSelection, computerSelection) {
         console.log("You didn't input rock, paper, or scissors. Please input one of those!");
     }
 }
+*/
 
-
+/*
 // this function will play a 5 round game that will keep score and report a winner or lose by the end
 function game() {
 
@@ -125,6 +127,93 @@ function game() {
         console.log("It's a tie game! What are the odds!");
     }
     
+} 
+*/
+
+// interactivity code
+
+
+// div class 'results' is for displaying the results... code for that is as follows
+const divContainer = document.querySelector('#results-div');
+
+// create div for the notification of if you won or not, etc. then modify it according to the parameters
+const notify = document.createElement('div');
+notify.classList.add('notify');
+
+
+function playRound(playerSelection, computerSelection) {
+    // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
+    playerSelection = playerSelection.toLowerCase();
+    if (playerSelection === 'rock' && computerSelection === 'rock') {
+
+        notify.textContent = "You both chose rock! That's a tie round!"
+        divContainer.appendChild(notify);
+    
+    } else if (playerSelection === 'rock' && computerSelection === 'paper') {
+    
+        notify.textContent = "You lose! Paper beats rock!";
+        divContainer.appendChild(notify);
+    
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+    
+        notify.textContent = "You win! Rock beats scissors!";
+        divContainer.appendChild(notify);
+    
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+    
+    
+        notify.textContent = "You win! Paper beats rock!";
+        divContainer.appendChild(notify);
+    
+    } else if (playerSelection === 'paper' && computerSelection === 'paper') {
+    
+    
+        notify.textContent = "You both chose rock! That's a tie round!";
+        divContainer.appendChild(notify);
+    
+    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
+    
+    
+        notify.textContent = "You lose! Scissors beats paper!";
+        divContainer.appendChild(notify);
+    
+    
+    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+    
+    
+        notify.textContent = "You lose! Rock beats scissors!";
+        divContainer.appendChild(notify);
+    
+    
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+    
+    
+        notify.textContent = "You win! Scissors beats paper!";
+        divContainer.appendChild(notify);
+    
+    
+    } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
+    
+    
+        notify.textContent = "You both chose scissors! It's a tie round!";
+        divContainer.appendChild(notify);
+    }   
 }
 
-console.log(game());
+// coding the 'rock' button
+const rockButton = document.querySelector('#rock-button');
+rockButton.addEventListener('click', () => {
+    playRound('rock', computerPlay());
+});
+
+// coding the 'paper' button
+const paperButton = document.querySelector('#paper-button');
+paperButton.addEventListener('click', () => {
+    playRound('paper', computerPlay());
+});
+
+// coding the scissors button
+const scissorsButton = document.querySelector('#scissors-button');
+scissorsButton.addEventListener('click', () => {
+    playRound('scissors', computerPlay());
+});
