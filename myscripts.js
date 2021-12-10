@@ -97,40 +97,9 @@ function game() {
 } 
 */
 
-// this function will choose the computer's choiice between rock, paper, or scissors at random
-function computerPlay() {
-    // declare an array that will store the computer's 3 possible choices
-    let arrayPossibleChoices= ['rock', 'paper', 'scissors'];
 
-    // randomly choose either rock, paper, or scissors and store it as a variable
-    let computerChoice = Math.floor(Math.random() * arrayPossibleChoices.length);
-
-    // test our output and make sure it's working correctly
-    console.log(computerChoice);
-
-    // this will be the final string that we return at the end of the function. It's empty for now until we need to redefine it.
-    let finalChoice = '';
-
-    // convert our selection into a string using a switch statement. 0 represents rock, 1 represents paper, and 2 represents scissors
-    switch(computerChoice) {
-        case 0:
-            finalChoice = 'rock';
-            break;
-        case 1:
-            finalChoice = 'paper';
-            break;
-        case 2:
-            finalChoice = 'scissors';
-            break;
-    }
-
-    // test our output again
-    console.log(finalChoice);
-
-    // return the randomly selected choice
-    return finalChoice;
-}
-
+// create const to select all the buttons
+const buttons = document.querySelectorAll('button');
 
 // declaring the 'rock' button
 const rockButton = document.querySelector('#rock-button');
@@ -164,14 +133,47 @@ const playerPointsDiv = document.createElement('div');
 playerPointsDiv.classList.add('player-points-div');
 
 // create div in memory for if the computer wins
-const computerWonDiv = document.createElement('div');
-computerWonDiv.classList.add('the-end');
-computerWonDiv.textContent = 'The computer won! Oh no!';
+const gameOverDiv = document.createElement('div');
 
-// create div in memory for if the player wins
-const playerWonDiv = document.createElement('div');
-playerWonDiv.classList.add('the-end');
-playerWonDiv.textContent = 'You won! YAY!';
+
+
+let computerScore = 0;
+let playerScore = 0;
+
+
+// this function will choose the computer's choiice between rock, paper, or scissors at random
+function computerPlay() {
+    // declare an array that will store the computer's 3 possible choices
+    let arrayPossibleChoices= ['rock', 'paper', 'scissors'];
+
+    // randomly choose either rock, paper, or scissors and store it as a variable
+    let computerChoice = Math.floor(Math.random() * arrayPossibleChoices.length);
+
+    // test our output and make sure it's working correctly
+    console.log(computerChoice);
+
+    // this will be the final string that we return at the end of the function. It's empty for now until we need to redefine it.
+    let finalChoice = '';
+
+    // convert our selection into a string using a switch statement. 0 represents rock, 1 represents paper, and 2 represents scissors
+    switch(computerChoice) {
+        case 0:
+            finalChoice = 'rock';
+            break;
+        case 1:
+            finalChoice = 'paper';
+            break;
+        case 2:
+            finalChoice = 'scissors';
+            break;
+    }
+
+    // test our output again
+    console.log(finalChoice);
+
+    // return the randomly selected choice
+    return finalChoice;
+}
 
 function playRound(playerSelection, computerSelection) {
     // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
@@ -220,6 +222,8 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function score(point) {
+
+
     switch(point) {
         case -1:
             computerScore += 1;
@@ -240,17 +244,27 @@ function score(point) {
     playerPointsDiv.textContent = "YOUR SCORE: " + +playerScore;
     pointsDiv.appendChild(playerPointsDiv);
 
-    if (computerScore === 5) {
-        endDiv.appendChild(computerWonDiv);
-        //alert("You lost!");
-    } else if (playerScore === 5) {
-        endDiv.appendChild(playerWonDiv);
-        //alert("You win!");
+    if (computerScore == 5) {
+        // display results and end the game by removing all DOM tree attributes
+        endDiv.appendChild(gameOverDiv);
+
+
+        rockButton.disabled = true;
+        paperButton.disabled = true;
+        scissorsButton.disabled = true;
+
+    } else if (playerScore == 5) {
+        // display results and end the game by removing all DOM tree
+        endDiv.appendChild(gameOverDiv);
+
+        rockButton.disabled = true;
+        paperButton.disabled = true;
+        scissorsButton.disabled = true;
+
+
     } 
 }
 
-let computerScore = 0;
-let playerScore = 0;
 
 // add event listener to rock so that when a player clicks it, player selection is passed as 'rock'
 rockButton.addEventListener('click', () => {
@@ -266,4 +280,3 @@ paperButton.addEventListener('click', () => {
 scissorsButton.addEventListener('click', () => {
     score(playRound('scissors', computerPlay()))
 });     
-
