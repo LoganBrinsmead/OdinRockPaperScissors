@@ -141,12 +141,37 @@ const paperButton = document.querySelector('#paper-button');
 // declaring the scissors button
 const scissorsButton = document.querySelector('#scissors-button');
 
-// div class 'results' is for displaying the results... code for that is as follows
-const divContainer = document.querySelector('#results-div');
+// div class 'results' is for displaying the results
+const resultsDiv = document.querySelector('#results-div');
 
-// create div for the notification of if you won or not, etc. then modify it according to the parameters
+// declariing the pointsDiv to display the points
+const pointsDiv = document.querySelector('#points-div');
+
+// declaring the endDiv to display thhe end result of the game
+const endDiv = document.querySelector('#end-div');
+
+// create div for the notification of if you won *that round* or not, etc. then modify it according to the parameters
 const notify = document.createElement('div');
 notify.classList.add('notify');
+
+
+// create div for the points of the computer
+const computerPointsDiv = document.createElement('div');
+computerPointsDiv.classList.add('computer-points-div');
+
+// create div for the points of the player
+const playerPointsDiv = document.createElement('div');
+playerPointsDiv.classList.add('player-points-div');
+
+// create div in memory for if the computer wins
+const computerWonDiv = document.createElement('div');
+computerWonDiv.classList.add('the-end');
+computerWonDiv.textContent = 'The computer won! Oh no!';
+
+// create div in memory for if the player wins
+const playerWonDiv = document.createElement('div');
+playerWonDiv.classList.add('the-end');
+playerWonDiv.textContent = 'You won! YAY!';
 
 function playRound(playerSelection, computerSelection) {
     // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
@@ -157,39 +182,39 @@ function playRound(playerSelection, computerSelection) {
 
     if (playerSelection === 'rock' && computerSelection === 'rock') {
         notify.textContent = "You both chose rock! That's a tie round!"
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point;
     } else if (playerSelection === 'rock' && computerSelection === 'paper') {
         notify.textContent = "You lose! Paper beats rock!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point -= 1;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
         notify.textContent = "You win! Rock beats scissors!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
         notify.textContent = "You win! Paper beats rock!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'paper') {
         notify.textContent = "You both chose paper! That's a tie round!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point;
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
         notify.textContent = "You lose! Scissors beats paper!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
         notify.textContent = "You lose! Rock beats scissors!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
         notify.textContent = "You win! Scissors beats paper!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point += 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
         notify.textContent = "You both chose scissors! It's a tie round!";
-        divContainer.appendChild(notify);
+        resultsDiv.appendChild(notify);
         return point;
     }   
 }
@@ -206,13 +231,21 @@ function score(point) {
             break;
     }
 
-    console.log('Computer score: ' + computerScore);
-    console.log('Player score: ' + playerScore);
+    // set the text content of the computer points div to a string of computer score and add it to the DOM
+    computerPointsDiv.textContent = "THE FOE'S SCORE: " + +computerScore;
+    pointsDiv.appendChild(computerPointsDiv);
+    
+
+    // set the text content of the player points div to a string of player score and add it to the DOM
+    playerPointsDiv.textContent = "YOUR SCORE: " + +playerScore;
+    pointsDiv.appendChild(playerPointsDiv);
 
     if (computerScore === 5) {
-        alert("You lost!");
+        endDiv.appendChild(computerWonDiv);
+        //alert("You lost!");
     } else if (playerScore === 5) {
-        alert("You win!");
+        endDiv.appendChild(playerWonDiv);
+        //alert("You win!");
     } 
 }
 
