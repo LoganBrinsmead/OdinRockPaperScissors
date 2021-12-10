@@ -2,39 +2,6 @@
     Made by me, Logan.
 */
 
-// this function will choose the computer's choiice between rock, paper, or scissors at random
-function computerPlay() {
-    // declare an array that will store the computer's 3 possible choices
-    let arrayPossibleChoices= ['rock', 'paper', 'scissors'];
-
-    // randomly choose either rock, paper, or scissors and store it as a variable
-    let computerChoice = Math.floor(Math.random() * arrayPossibleChoices.length);
-
-    // test our output and make sure it's working correctly
-    console.log(computerChoice);
-
-    // this will be the final string that we return at the end of the function. It's empty for now until we need to redefine it.
-    let finalChoice = '';
-
-    // convert our selection into a string using a switch statement. 0 represents rock, 1 represents paper, and 2 represents scissors
-    switch(computerChoice) {
-        case 0:
-            finalChoice = 'rock';
-            break;
-        case 1:
-            finalChoice = 'paper';
-            break;
-        case 2:
-            finalChoice = 'scissors';
-            break;
-    }
-
-    // test our output again
-    console.log(finalChoice);
-
-    // return the randomly selected choice
-    return finalChoice;
-}
 
 /*
 // making a function where the user can play a round against the computer
@@ -130,8 +97,49 @@ function game() {
 } 
 */
 
-// interactivity code
+// this function will choose the computer's choiice between rock, paper, or scissors at random
+function computerPlay() {
+    // declare an array that will store the computer's 3 possible choices
+    let arrayPossibleChoices= ['rock', 'paper', 'scissors'];
 
+    // randomly choose either rock, paper, or scissors and store it as a variable
+    let computerChoice = Math.floor(Math.random() * arrayPossibleChoices.length);
+
+    // test our output and make sure it's working correctly
+    console.log(computerChoice);
+
+    // this will be the final string that we return at the end of the function. It's empty for now until we need to redefine it.
+    let finalChoice = '';
+
+    // convert our selection into a string using a switch statement. 0 represents rock, 1 represents paper, and 2 represents scissors
+    switch(computerChoice) {
+        case 0:
+            finalChoice = 'rock';
+            break;
+        case 1:
+            finalChoice = 'paper';
+            break;
+        case 2:
+            finalChoice = 'scissors';
+            break;
+    }
+
+    // test our output again
+    console.log(finalChoice);
+
+    // return the randomly selected choice
+    return finalChoice;
+}
+
+
+// declaring the 'rock' button
+const rockButton = document.querySelector('#rock-button');
+
+// declaring the 'paper' button
+const paperButton = document.querySelector('#paper-button');
+
+// declaring the scissors button
+const scissorsButton = document.querySelector('#scissors-button');
 
 // div class 'results' is for displaying the results... code for that is as follows
 const divContainer = document.querySelector('#results-div');
@@ -140,80 +148,89 @@ const divContainer = document.querySelector('#results-div');
 const notify = document.createElement('div');
 notify.classList.add('notify');
 
-
 function playRound(playerSelection, computerSelection) {
     // first we need to make the player's selection case-insensitive no matter what they input. so we just make it lowercase
     playerSelection = playerSelection.toLowerCase();
-    if (playerSelection === 'rock' && computerSelection === 'rock') {
 
+    // variable for keeping points
+    let point = 0;
+
+    if (playerSelection === 'rock' && computerSelection === 'rock') {
         notify.textContent = "You both chose rock! That's a tie round!"
         divContainer.appendChild(notify);
-    
+        return point;
     } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-    
         notify.textContent = "You lose! Paper beats rock!";
         divContainer.appendChild(notify);
-    
+        return point -= 1;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-    
         notify.textContent = "You win! Rock beats scissors!";
         divContainer.appendChild(notify);
-    
+        return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-    
-    
         notify.textContent = "You win! Paper beats rock!";
         divContainer.appendChild(notify);
-    
+        return point += 1;
     } else if (playerSelection === 'paper' && computerSelection === 'paper') {
-    
-    
-        notify.textContent = "You both chose rock! That's a tie round!";
+        notify.textContent = "You both chose paper! That's a tie round!";
         divContainer.appendChild(notify);
-    
+        return point;
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-    
-    
         notify.textContent = "You lose! Scissors beats paper!";
         divContainer.appendChild(notify);
-    
-    
+        return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-    
-    
         notify.textContent = "You lose! Rock beats scissors!";
         divContainer.appendChild(notify);
-    
-    
+        return point -= 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-    
-    
         notify.textContent = "You win! Scissors beats paper!";
         divContainer.appendChild(notify);
-    
-    
+        return point += 1;
     } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-    
-    
         notify.textContent = "You both chose scissors! It's a tie round!";
         divContainer.appendChild(notify);
+        return point;
     }   
 }
 
-// coding the 'rock' button
-const rockButton = document.querySelector('#rock-button');
+function score(point) {
+    switch(point) {
+        case -1:
+            computerScore += 1;
+            break;
+        case 0:
+            break;
+        case 1:
+            playerScore += 1;
+            break;
+    }
+
+    console.log('Computer score: ' + computerScore);
+    console.log('Player score: ' + playerScore);
+
+    if (computerScore === 5) {
+        alert("You lost!");
+    } else if (playerScore === 5) {
+        alert("You win!");
+    } 
+}
+
+let computerScore = 0;
+let playerScore = 0;
+
+// add event listener to rock so that when a player clicks it, player selection is passed as 'rock'
 rockButton.addEventListener('click', () => {
-    playRound('rock', computerPlay());
+    score(playRound('rock', computerPlay()))
 });
 
-// coding the 'paper' button
-const paperButton = document.querySelector('#paper-button');
+// add event listener to paper button so that when a player clicks it, player selection is passed as 'paper'
 paperButton.addEventListener('click', () => {
-    playRound('paper', computerPlay());
+    score(playRound('paper', computerPlay()))
 });
 
-// coding the scissors button
-const scissorsButton = document.querySelector('#scissors-button');
+// add event listener to scissors button so that when a player clicks it, player selection is passed as 'scissors'
 scissorsButton.addEventListener('click', () => {
-    playRound('scissors', computerPlay());
-});
+    score(playRound('scissors', computerPlay()))
+});     
+
